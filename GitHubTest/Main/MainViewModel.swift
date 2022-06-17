@@ -19,7 +19,7 @@ struct MainViewModel {
                 self.link.value = userModels
             }
             catch {
-                
+                print("Error")
             }
         }
         task.resume()
