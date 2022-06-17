@@ -8,8 +8,7 @@
 import Foundation
 
 struct MainViewModel {
-    var user: Observable<[TableViewCellViewModel]> = Observable([])
-    var viewModel: MainModel?
+    var link: Observable<[MainModel]> = Observable([])
     
     func fetchData() {
         guard let url = URL(string: "https://api.github.com/repositories") else { return }
@@ -17,9 +16,7 @@ struct MainViewModel {
             guard let data = data else { return }
             do {
                 let userModels = try JSONDecoder().decode([MainModel].self, from: data)
-                self.user.value = userModels.compactMap({
-                    TableViewCellViewModel(html_url: $0.html_url)
-                })
+                self.link.value = userModels
             }
             catch {
                 
@@ -27,8 +24,4 @@ struct MainViewModel {
         }
         task.resume()
     }
-}
-
-struct TableViewCellViewModel {
-    let html_url: String
 }

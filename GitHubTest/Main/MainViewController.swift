@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, ViewCoordinator {
     
     let searchBar = UISearchBar()
     let searchController = UISearchController(searchResultsController: nil)
@@ -19,12 +19,13 @@ class MainViewController: UIViewController {
     
     var viewModel = MainViewModel()
     var data: MainModel?
+    var dataModel = [MainModel]()
+    var coordinator: Coordiantor?
     
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
     }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,11 +34,10 @@ class MainViewController: UIViewController {
         configureUISearchController()
         configureUITableView()
         
-        viewModel.user.bind { [weak self] _ in
+        viewModel.link.bind { [weak self] _ in
             self?.tableView.reloadData()
         }
         viewModel.fetchData()
-        
     }
     
     // MARK: - viewDidLayoutSubviews
@@ -85,14 +85,20 @@ extension MainViewController: UISearchBarDelegate {
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.user.value?.count ?? 0
+        return viewModel.link.value?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = viewModel.user.value?[indexPath.row].html_url
+        let datas = viewModel.link.value?[indexPath.row]
+        cell.textLabel?.text = datas?.html_url
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let model = viewModel.link.value?[indexPath.row] else { return }
+        coordinator?.eventOccurred(with: .tapped(object: model))
     }
 
 }
-

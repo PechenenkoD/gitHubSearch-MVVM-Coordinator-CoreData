@@ -9,5 +9,7 @@ import Foundation
 
 struct MainModel: Codable {
     var html_url: String
+    var name: String
+    var full_name: String
 }
 
