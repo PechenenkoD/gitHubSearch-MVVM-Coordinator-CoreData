@@ -100,5 +100,4 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         guard let model = viewModel.link.value?[indexPath.row] else { return }
         coordinator?.eventOccurred(with: .tapped(object: model))
     }
-
 }
