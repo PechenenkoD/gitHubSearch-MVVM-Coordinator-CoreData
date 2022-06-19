@@ -19,7 +19,6 @@ class MainViewController: UIViewController, ViewCoordinator {
     
     var viewModel = MainViewModel()
     var data: MainModel?
-    var dataModel = [MainModel]()
     var coordinator: Coordiantor?
     
     private var searchBarIsEmpty: Bool {
@@ -68,7 +67,6 @@ class MainViewController: UIViewController, ViewCoordinator {
         tableView.delegate = self
         tableView.dataSource = self
     }
-     
 }
 
 // MARK: - Extensions
