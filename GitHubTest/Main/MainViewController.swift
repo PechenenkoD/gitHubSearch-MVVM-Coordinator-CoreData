@@ -17,7 +17,7 @@ class MainViewController: UIViewController, ViewCoordinator {
         return table
     }()
     
-    var viewModel = MainViewModel()
+    var viewModel: MainViewModel?
     var data: MainModel?
     var coordinator: Coordiantor?
     
@@ -33,10 +33,10 @@ class MainViewController: UIViewController, ViewCoordinator {
         configureUISearchController()
         configureUITableView()
         
-        viewModel.link.bind { [weak self] _ in
+        viewModel?.link.bind { [weak self] _ in
             self?.tableView.reloadData()
         }
-        viewModel.fetchData()
+        viewModel?.fetchData()
     }
     
     // MARK: - viewDidLayoutSubviews
@@ -83,19 +83,19 @@ extension MainViewController: UISearchBarDelegate {
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.link.value?.count ?? 0
+        return viewModel?.link.value?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let datas = viewModel.link.value?[indexPath.row]
-        cell.textLabel?.text = datas?.html_url
+        let datas = viewModel?.link.value?[indexPath.row]
+        cell.textLabel?.text = datas?.html_url.prefix(30).appending("...")
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let model = viewModel.link.value?[indexPath.row] else { return }
+        guard let model = viewModel?.link.value?[indexPath.row] else { return }
         coordinator?.eventOccurred(with: .tapped(object: model))
     }
 }

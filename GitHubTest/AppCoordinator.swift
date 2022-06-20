@@ -24,8 +24,9 @@ class AppCoordinator: Coordiantor {
     }
     
     func start() {
-        var vc: UIViewController & ViewCoordinator = MainViewController()
+        let vc = MainViewController()
         vc.coordinator = self
+        vc.viewModel = MainViewModel()
         navigationController?.setViewControllers([vc], animated: false)
     }
     
