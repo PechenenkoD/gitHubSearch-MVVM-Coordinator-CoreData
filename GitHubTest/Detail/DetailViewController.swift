@@ -26,7 +26,7 @@ class DetailViewController: UIViewController, ViewCoordinator {
     
     private func setupUI() {
         title = "Detail"
-        view.backgroundColor = .cyan
+        view.backgroundColor = .white
     }
     
     private func setupLabel() {
