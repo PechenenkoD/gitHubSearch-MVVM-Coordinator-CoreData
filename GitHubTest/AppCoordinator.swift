@@ -30,5 +30,4 @@ class AppCoordinator: Coordiantor {
         navigationController?.setViewControllers([vc], animated: false)
     }
     
-    
 }

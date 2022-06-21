@@ -46,5 +46,3 @@ class DetailViewController: UIViewController, ViewCoordinator {
         labelFullName.text = viewModel?.link.value?.full_name
     }
 }
-
-

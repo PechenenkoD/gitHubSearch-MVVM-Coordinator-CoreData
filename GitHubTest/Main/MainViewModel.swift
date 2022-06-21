@@ -7,11 +7,33 @@
 
 import Foundation
 
+//struct MainViewModel {
+//    var link: Observable<[MainModel]> = Observable([])
+//
+//    func fetchData() {
+//        guard let url = URL(string: "https://api.github.com/repositories") else { return }
+//        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
+//            guard let data = data else { return }
+//            do {
+//                let userModels = try JSONDecoder().decode([MainModel].self, from: data)
+//                self.link.value = userModels
+//            }
+//            catch {
+//                print("Error")
+//            }
+//        }
+//        task.resume()
+//    }
+//}
+
+
 struct MainViewModel {
     var link: Observable<[MainModel]> = Observable([])
+
+    static let api = URL(string: "https://api.github.com/repositories")
     
-    func fetchData() {
-        guard let url = URL(string: "https://api.github.com/repositories") else { return }
+    public func fetchData() {
+        guard let url = MainViewModel.api else { return }
         let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
             guard let data = data else { return }
             do {
@@ -24,4 +46,5 @@ struct MainViewModel {
         }
         task.resume()
     }
+
 }
