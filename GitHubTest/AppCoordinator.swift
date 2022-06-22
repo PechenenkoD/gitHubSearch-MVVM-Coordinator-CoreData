@@ -29,5 +29,4 @@ class AppCoordinator: Coordiantor {
         vc.viewModel = MainViewModel()
         navigationController?.setViewControllers([vc], animated: false)
     }
-    
 }

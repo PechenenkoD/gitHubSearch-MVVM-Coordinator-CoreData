@@ -21,7 +21,6 @@ class MainViewController: UIViewController, ViewCoordinator {
     var viewModel: MainViewModel?
     var data: MainModel?
     var coordinator: Coordiantor?
-    
     var filteredData = [MainModel]()
 
     private var searchBarIsEmpty: Bool {
