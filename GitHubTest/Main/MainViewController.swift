@@ -40,6 +40,7 @@ class MainViewController: UIViewController, ViewCoordinator {
             self?.tableView.reloadData()
         }
         viewModel?.fetchData()
+        viewModel?.coreData()
     }
     
     // MARK: - viewDidLayoutSubviews

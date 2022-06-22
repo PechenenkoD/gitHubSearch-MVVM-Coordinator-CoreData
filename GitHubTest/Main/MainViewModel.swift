@@ -6,26 +6,7 @@
 //
 
 import Foundation
-
-//struct MainViewModel {
-//    var link: Observable<[MainModel]> = Observable([])
-//
-//    func fetchData() {
-//        guard let url = URL(string: "https://api.github.com/repositories") else { return }
-//        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
-//            guard let data = data else { return }
-//            do {
-//                let userModels = try JSONDecoder().decode([MainModel].self, from: data)
-//                self.link.value = userModels
-//            }
-//            catch {
-//                print("Error")
-//            }
-//        }
-//        task.resume()
-//    }
-//}
-
+import CoreData
 
 struct MainViewModel {
     var link: Observable<[MainModel]> = Observable([])
@@ -45,6 +26,28 @@ struct MainViewModel {
             }
         }
         task.resume()
+    }
+    
+    public func coreData() {
+        let managedObject = GitHubData()
+        
+        managedObject.name = "test"
+        
+        let name = managedObject.name
+        
+        print("\(name))")
+        
+        CoreDataManger.instance.saveContext()
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "GitHubData")
+        do {
+            let results = try CoreDataManger.instance.context.fetch(fetchRequest)
+            for result in results as! [GitHubData] {
+                print("name - \(result.name)")
+            }
+        } catch {
+            print(error)
+        }
     }
 
 }

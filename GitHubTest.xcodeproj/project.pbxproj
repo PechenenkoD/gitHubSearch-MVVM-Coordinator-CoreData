@@ -22,6 +22,9 @@
 		19C60F5F285BBDDB00CF6496 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F5E285BBDDB00CF6496 /* DetailViewController.swift */; };
 		19C60F62285C499E00CF6496 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F61285C499D00CF6496 /* Coordinator.swift */; };
 		19C60F64285C49F900CF6496 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F63285C49F900CF6496 /* AppCoordinator.swift */; };
+		19C60F942863A41000CF6496 /* GitHubData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F922863A41000CF6496 /* GitHubData+CoreDataClass.swift */; };
+		19C60F952863A41000CF6496 /* GitHubData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F932863A41000CF6496 /* GitHubData+CoreDataProperties.swift */; };
+		19C60F972863AA3500CF6496 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F962863AA3500CF6496 /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +64,9 @@
 		19C60F5E285BBDDB00CF6496 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		19C60F61285C499D00CF6496 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		19C60F63285C49F900CF6496 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		19C60F922863A41000CF6496 /* GitHubData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		19C60F932863A41000CF6496 /* GitHubData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		19C60F962863AA3500CF6496 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,9 @@
 		19C60EF32858773E00CF6496 = {
 			isa = PBXGroup;
 			children = (
+				19C60F962863AA3500CF6496 /* CoreDataManager.swift */,
+				19C60F922863A41000CF6496 /* GitHubData+CoreDataClass.swift */,
+				19C60F932863A41000CF6496 /* GitHubData+CoreDataProperties.swift */,
 				19C60EFE2858773E00CF6496 /* GitHubTest */,
 				19C60F182858774000CF6496 /* GitHubTestTests */,
 				19C60F222858774000CF6496 /* GitHubTestUITests */,
@@ -301,9 +310,12 @@
 			files = (
 				19C60F64285C49F900CF6496 /* AppCoordinator.swift in Sources */,
 				19C60F5F285BBDDB00CF6496 /* DetailViewController.swift in Sources */,
+				19C60F952863A41000CF6496 /* GitHubData+CoreDataProperties.swift in Sources */,
 				19C60F44285888AF00CF6496 /* MainViewModel.swift in Sources */,
 				19C60F62285C499E00CF6496 /* Coordinator.swift in Sources */,
+				19C60F942863A41000CF6496 /* GitHubData+CoreDataClass.swift in Sources */,
 				19C60F422858885700CF6496 /* MainModel.swift in Sources */,
+				19C60F972863AA3500CF6496 /* CoreDataManager.swift in Sources */,
 				19C60F042858773E00CF6496 /* MainViewController.swift in Sources */,
 				19C60F002858773E00CF6496 /* AppDelegate.swift in Sources */,
 				19C60F0A2858773E00CF6496 /* GitHubTest.xcdatamodeld in Sources */,
