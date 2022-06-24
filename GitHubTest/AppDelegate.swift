@@ -12,23 +12,19 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    var coreDataStack = CoreDataStack.shared
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let navVC = UINavigationController()
-        
-        let coordinator = AppCoordinator()
-        coordinator.navigationController = navVC
-        
         let window = UIWindow(frame: UIScreen.main.bounds)
+        let coordinator = AppCoordinator()
+        let navVC = UINavigationController()
         window.rootViewController = navVC
+        coordinator.navigationController = navVC
         window.makeKeyAndVisible()
         self.window = window
         coordinator.start()
+
         return true
     }
-
-    
-
 }
-

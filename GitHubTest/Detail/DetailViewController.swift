@@ -19,8 +19,8 @@ class DetailViewController: UIViewController, ViewCoordinator {
         setupUI()
         setupLabel()
         viewModel?.link.bind { details in
-            self.labelName.text = details?.name
-            self.labelFullName.text = details?.full_name
+            self.labelName.text = details?.login
+            self.labelFullName.text = details?.login
         }
     }
     
@@ -42,7 +42,7 @@ class DetailViewController: UIViewController, ViewCoordinator {
         labelFullName.text = ""
             self.view.addSubview(labelFullName)
         
-        labelName.text = viewModel?.link.value?.name
-        labelFullName.text = viewModel?.link.value?.full_name
+        labelName.text = viewModel?.link.value?.login
+        labelFullName.text = viewModel?.link.value?.login
     }
 }

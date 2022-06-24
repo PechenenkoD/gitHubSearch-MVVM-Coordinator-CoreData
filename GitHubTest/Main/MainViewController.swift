@@ -6,8 +6,29 @@
 //
 
 import UIKit
+import CoreData
 
 class MainViewController: UIViewController, ViewCoordinator {
+    
+    var dataProvider: DataProvider!
+    lazy var fetchedResultsController: NSFetchedResultsController<GitHubData> = {
+        let fetchRequest = NSFetchRequest<GitHubData>(entityName: "GitHubData")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending:true)]
+        
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                    managedObjectContext: dataProvider.viewContext,
+                                                    sectionNameKeyPath: nil, cacheName: nil)
+        controller.delegate = self
+        
+        do {
+            try controller.performFetch()
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+        
+        return controller
+    }()
     
     let searchBar = UISearchBar()
     let searchController = UISearchController(searchResultsController: nil)
@@ -19,9 +40,9 @@ class MainViewController: UIViewController, ViewCoordinator {
     }()
     
     var viewModel: MainViewModel?
-    var data: MainModel?
+    var data: GitHubData?
     var coordinator: Coordiantor?
-    var filteredData = [MainModel]()
+    var filteredData = [GitHubData]()
 
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
@@ -39,8 +60,7 @@ class MainViewController: UIViewController, ViewCoordinator {
         viewModel?.link.bind { [weak self] _ in
             self?.tableView.reloadData()
         }
-        viewModel?.fetchData()
-        viewModel?.coreData()
+        dataProvider.fetchData{ (error) in }
     }
     
     // MARK: - viewDidLayoutSubviews
@@ -88,8 +108,8 @@ extension MainViewController: UISearchResultsUpdating {
     }
     
     private func filterContentForSearchText(_ searchText: String) {
-        guard let filteredDatas = viewModel?.link.value?.filter({ (search: MainModel) -> Bool in
-            return search.html_url.lowercased().contains(searchText.lowercased())
+        guard let filteredDatas = viewModel?.link.value?.filter({ (search: GitHubData) -> Bool in
+            return search.url.lowercased().contains(searchText.lowercased())
         }) else {
             return
         }
@@ -103,27 +123,35 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         if isFiltering {
             return filteredData.count
         }
-        return viewModel?.link.value?.count ?? 0
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let fetchResult = fetchedResultsController.object(at: indexPath)
         
-        var datas: MainModel
+//        var datas: GitHubData
+//
+//        if isFiltering {
+//            datas = filteredData[indexPath.row]
+//        } else {
+//            datas =
+//
+//        }
         
-        if isFiltering {
-            datas = filteredData[indexPath.row]
-        } else {
-            datas = (viewModel?.link.value?[indexPath.row])!
-        }
-        
-        cell.textLabel?.text = datas.html_url.prefix(30).appending("...")
+        cell.textLabel?.text = fetchResult.url.prefix(30).appending("...")
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let model = viewModel?.link.value?[indexPath.row] else { return }
+        let model = fetchedResultsController.object(at: indexPath)
         coordinator?.eventOccurred(with: .tapped(object: model))
+    }
+}
+
+extension MainViewController: NSFetchedResultsControllerDelegate {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        tableView.reloadData()
     }
 }

@@ -20,6 +20,3 @@ extension GitHubData {
 
 }
 
-extension GitHubData : Identifiable {
-
-}

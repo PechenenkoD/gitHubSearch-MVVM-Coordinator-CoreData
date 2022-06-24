@@ -9,45 +9,40 @@ import Foundation
 import CoreData
 
 struct MainViewModel {
-    var link: Observable<[MainModel]> = Observable([])
+    private init() {}
+    static let shared = MainViewModel()
+    
+    var link: Observable<[GitHubData]> = Observable([])
 
     static let api = URL(string: "https://api.github.com/repositories")
     
-    public func fetchData() {
+    public func fetchData(completion: @escaping(_ filmsDict: [GitHubData]?, _ error: Error?) -> ()) {
         guard let url = MainViewModel.api else { return }
-        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
-            guard let data = data else { return }
-            do {
-                let userModels = try JSONDecoder().decode([MainModel].self, from: data)
-                self.link.value = userModels
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                completion(nil, error)
+                return
             }
-            catch {
-                print("Error")
+            
+            guard let data = data else {
+                let error = NSError(domain: dataErrorDomain, code: DataErrorCode.networkUnavailable.rawValue, userInfo: nil)
+                completion(nil, error)
+                return
+            }
+            
+            do {
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "GitHubData")
+                let deleteRequest = NSBatchDeleteRequest.init(fetchRequest: fetchRequest)
+                try CoreDataStack.shared.persistentContainer.viewContext.execute(deleteRequest)
+                
+                let jsonObject = try JSONDecoder().decode([GitHubData].self, from: data)
+                print(jsonObject)
+                completion(jsonObject, nil)
+            } catch {
+                completion(nil, error)
             }
         }
         task.resume()
     }
     
-    public func coreData() {
-        let managedObject = GitHubData()
-        
-        managedObject.name = "test"
-        
-        let name = managedObject.name
-        
-        print("\(name))")
-        
-        CoreDataManger.instance.saveContext()
-        
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "GitHubData")
-        do {
-            let results = try CoreDataManger.instance.context.fetch(fetchRequest)
-            for result in results as! [GitHubData] {
-                print("name - \(result.name)")
-            }
-        } catch {
-            print(error)
-        }
-    }
-
 }

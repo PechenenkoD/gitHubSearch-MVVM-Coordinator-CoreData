@@ -15,7 +15,6 @@
 		19C60F1A2858774000CF6496 /* GitHubTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F192858774000CF6496 /* GitHubTestTests.swift */; };
 		19C60F242858774000CF6496 /* GitHubTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F232858774000CF6496 /* GitHubTestUITests.swift */; };
 		19C60F262858774000CF6496 /* GitHubTestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F252858774000CF6496 /* GitHubTestUITestsLaunchTests.swift */; };
-		19C60F422858885700CF6496 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F412858885700CF6496 /* MainModel.swift */; };
 		19C60F44285888AF00CF6496 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F43285888AF00CF6496 /* MainViewModel.swift */; };
 		19C60F56285B588900CF6496 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F55285B588900CF6496 /* Observable.swift */; };
 		19C60F5D285BBDCE00CF6496 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F5C285BBDCE00CF6496 /* DetailViewModel.swift */; };
@@ -24,7 +23,8 @@
 		19C60F64285C49F900CF6496 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F63285C49F900CF6496 /* AppCoordinator.swift */; };
 		19C60F942863A41000CF6496 /* GitHubData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F922863A41000CF6496 /* GitHubData+CoreDataClass.swift */; };
 		19C60F952863A41000CF6496 /* GitHubData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F932863A41000CF6496 /* GitHubData+CoreDataProperties.swift */; };
-		19C60F972863AA3500CF6496 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F962863AA3500CF6496 /* CoreDataManager.swift */; };
+		19FABEF82865E4BC001BFA2F /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FABEF72865E4BC001BFA2F /* DataProvider.swift */; };
+		19FABEFA2865E4D3001BFA2F /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FABEF92865E4D3001BFA2F /* CoreDataStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +57,6 @@
 		19C60F1F2858774000CF6496 /* GitHubTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		19C60F232858774000CF6496 /* GitHubTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubTestUITests.swift; sourceTree = "<group>"; };
 		19C60F252858774000CF6496 /* GitHubTestUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubTestUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		19C60F412858885700CF6496 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		19C60F43285888AF00CF6496 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		19C60F55285B588900CF6496 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		19C60F5C285BBDCE00CF6496 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
@@ -66,7 +65,8 @@
 		19C60F63285C49F900CF6496 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		19C60F922863A41000CF6496 /* GitHubData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		19C60F932863A41000CF6496 /* GitHubData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		19C60F962863AA3500CF6496 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		19FABEF72865E4BC001BFA2F /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
+		19FABEF92865E4D3001BFA2F /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +97,8 @@
 		19C60EF32858773E00CF6496 = {
 			isa = PBXGroup;
 			children = (
-				19C60F962863AA3500CF6496 /* CoreDataManager.swift */,
+				19FABEF92865E4D3001BFA2F /* CoreDataStack.swift */,
+				19FABEF72865E4BC001BFA2F /* DataProvider.swift */,
 				19C60F922863A41000CF6496 /* GitHubData+CoreDataClass.swift */,
 				19C60F932863A41000CF6496 /* GitHubData+CoreDataProperties.swift */,
 				19C60EFE2858773E00CF6496 /* GitHubTest */,
@@ -154,7 +155,6 @@
 		19C60F4E285B157300CF6496 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				19C60F412858885700CF6496 /* MainModel.swift */,
 				19C60F43285888AF00CF6496 /* MainViewModel.swift */,
 				19C60F032858773E00CF6496 /* MainViewController.swift */,
 			);
@@ -314,13 +314,13 @@
 				19C60F44285888AF00CF6496 /* MainViewModel.swift in Sources */,
 				19C60F62285C499E00CF6496 /* Coordinator.swift in Sources */,
 				19C60F942863A41000CF6496 /* GitHubData+CoreDataClass.swift in Sources */,
-				19C60F422858885700CF6496 /* MainModel.swift in Sources */,
-				19C60F972863AA3500CF6496 /* CoreDataManager.swift in Sources */,
+				19FABEFA2865E4D3001BFA2F /* CoreDataStack.swift in Sources */,
 				19C60F042858773E00CF6496 /* MainViewController.swift in Sources */,
 				19C60F002858773E00CF6496 /* AppDelegate.swift in Sources */,
 				19C60F0A2858773E00CF6496 /* GitHubTest.xcdatamodeld in Sources */,
 				19C60F56285B588900CF6496 /* Observable.swift in Sources */,
 				19C60F5D285BBDCE00CF6496 /* DetailViewModel.swift in Sources */,
+				19FABEF82865E4BC001BFA2F /* DataProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
