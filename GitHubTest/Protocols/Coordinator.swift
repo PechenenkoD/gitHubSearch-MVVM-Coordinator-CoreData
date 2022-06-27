@@ -10,7 +10,7 @@ import UIKit
 
 enum Event {
     case tapped (
-        object: GitHubData
+        object: Data
     )
 }
 

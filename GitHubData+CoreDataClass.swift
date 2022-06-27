@@ -9,8 +9,8 @@
 import Foundation
 import CoreData
 
-@objc(GitHubData)
-public class GitHubData: NSManagedObject, Decodable {
+@objc(Data)
+public class Data: NSManagedObject, Decodable {
 
     @NSManaged var login: String
     @NSManaged var id: NSNumber

@@ -9,14 +9,15 @@ import Foundation
 import CoreData
 
 struct MainViewModel {
+    
     private init() {}
     static let shared = MainViewModel()
     
-    var link: Observable<[GitHubData]> = Observable([])
+    var link: Observable<[Data]> = Observable([])
 
     static let api = URL(string: "https://api.github.com/repositories")
     
-    public func fetchData(completion: @escaping(_ filmsDict: [GitHubData]?, _ error: Error?) -> ()) {
+    public func fetchData(completion: @escaping(_ filmsDict: [Data]?, _ error: Error?) -> ()) {
         guard let url = MainViewModel.api else { return }
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
@@ -31,13 +32,14 @@ struct MainViewModel {
             }
             
             do {
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "GitHubData")
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Data")
                 let deleteRequest = NSBatchDeleteRequest.init(fetchRequest: fetchRequest)
                 try CoreDataStack.shared.persistentContainer.viewContext.execute(deleteRequest)
                 
-                let jsonObject = try JSONDecoder().decode([GitHubData].self, from: data)
+                let jsonObject = try JSONDecoder().decode([Data].self, from: data)
                 print(jsonObject)
                 completion(jsonObject, nil)
+                CoreDataStack.shared.saveContext()
             } catch {
                 completion(nil, error)
             }

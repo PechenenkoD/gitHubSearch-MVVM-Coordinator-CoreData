@@ -8,5 +8,5 @@
 import Foundation
 
 struct DetailViewModel {
-    var link: Observable<GitHubData> = Observable(nil)
+    var link: Observable<Data> = Observable(nil)
 }

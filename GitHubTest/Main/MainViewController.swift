@@ -11,8 +11,8 @@ import CoreData
 class MainViewController: UIViewController, ViewCoordinator {
     
     var dataProvider: DataProvider!
-    lazy var fetchedResultsController: NSFetchedResultsController<GitHubData> = {
-        let fetchRequest = NSFetchRequest<GitHubData>(entityName: "GitHubData")
+    lazy var fetchedResultsController: NSFetchedResultsController<Data> = {
+        let fetchRequest = NSFetchRequest<Data>(entityName: "Data")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending:true)]
         
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
@@ -40,9 +40,9 @@ class MainViewController: UIViewController, ViewCoordinator {
     }()
     
     var viewModel: MainViewModel?
-    var data: GitHubData?
+    var data: Data?
     var coordinator: Coordiantor?
-    var filteredData = [GitHubData]()
+    var filteredData = [Data]()
 
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
@@ -108,7 +108,7 @@ extension MainViewController: UISearchResultsUpdating {
     }
     
     private func filterContentForSearchText(_ searchText: String) {
-        guard let filteredDatas = viewModel?.link.value?.filter({ (search: GitHubData) -> Bool in
+        guard let filteredDatas = viewModel?.link.value?.filter({ (search: Data) -> Bool in
             return search.url.lowercased().contains(searchText.lowercased())
         }) else {
             return
@@ -129,13 +129,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let fetchResult = fetchedResultsController.object(at: indexPath)
-        
+//        
 //        var datas: GitHubData
 //
 //        if isFiltering {
 //            datas = filteredData[indexPath.row]
 //        } else {
-//            datas =
+//            datas = filteredData[indexPath.row]
 //
 //        }
         
