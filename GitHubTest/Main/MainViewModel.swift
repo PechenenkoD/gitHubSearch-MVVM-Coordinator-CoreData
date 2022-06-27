@@ -47,4 +47,24 @@ struct MainViewModel {
         task.resume()
     }
     
+    var dataProvider: DataProvider!
+    lazy var fetchedResultsController: NSFetchedResultsController<Data> = {
+        let fetchRequest = NSFetchRequest<Data>(entityName: "Data")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending:true)]
+        
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                    managedObjectContext: dataProvider.viewContext,
+                                                    sectionNameKeyPath: nil, cacheName: nil)
+        //controller.delegate = self
+        
+        do {
+            try controller.performFetch()
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+        
+        return controller
+    }()
+    
 }

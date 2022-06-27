@@ -10,26 +10,6 @@ import CoreData
 
 class MainViewController: UIViewController, ViewCoordinator {
     
-    var dataProvider: DataProvider!
-    lazy var fetchedResultsController: NSFetchedResultsController<Data> = {
-        let fetchRequest = NSFetchRequest<Data>(entityName: "Data")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending:true)]
-        
-        let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                                    managedObjectContext: dataProvider.viewContext,
-                                                    sectionNameKeyPath: nil, cacheName: nil)
-        controller.delegate = self
-        
-        do {
-            try controller.performFetch()
-        } catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
-        
-        return controller
-    }()
-    
     let searchBar = UISearchBar()
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -43,6 +23,7 @@ class MainViewController: UIViewController, ViewCoordinator {
     var data: Data?
     var coordinator: Coordiantor?
     var filteredData = [Data]()
+    
 
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
@@ -60,7 +41,7 @@ class MainViewController: UIViewController, ViewCoordinator {
         viewModel?.link.bind { [weak self] _ in
             self?.tableView.reloadData()
         }
-        dataProvider.fetchData{ (error) in }
+        viewModel?.dataProvider.fetchData{ (error) in }
     }
     
     // MARK: - viewDidLayoutSubviews
@@ -87,6 +68,7 @@ class MainViewController: UIViewController, ViewCoordinator {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
+        
     }
 }
 
@@ -119,16 +101,22 @@ extension MainViewController: UISearchResultsUpdating {
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
             return filteredData.count
         }
-        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+        return viewModel?.fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let fetchResult = fetchedResultsController.object(at: indexPath)
+        var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let fetchResult = viewModel?.fetchedResultsController.object(at: indexPath)
+        if cell != nil {
+            cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        }
 //        
 //        var datas: GitHubData
 //
@@ -139,14 +127,16 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 //
 //        }
         
-        cell.textLabel?.text = fetchResult.url.prefix(30).appending("...")
+        cell.textLabel?.text = fetchResult!.login
+        cell.detailTextLabel?.text = fetchResult!.html_url.prefix(30).appending("...")
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let model = fetchedResultsController.object(at: indexPath)
-        coordinator?.eventOccurred(with: .tapped(object: model))
+        let model = viewModel?.fetchedResultsController.object(at: indexPath)
+        coordinator?.eventOccurred(with: .tapped(object: model!))
     }
 }
 

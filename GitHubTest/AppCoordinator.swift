@@ -27,7 +27,7 @@ class AppCoordinator: Coordiantor {
         let vc = MainViewController()
         vc.coordinator = self
         vc.viewModel = MainViewModel.shared
-        vc.dataProvider = DataProvider(persistentContainer: CoreDataStack.shared.persistentContainer, repository: MainViewModel.shared)
+        vc.viewModel?.dataProvider = DataProvider(persistentContainer: CoreDataStack.shared.persistentContainer, repository: MainViewModel.shared)
         navigationController?.setViewControllers([vc], animated: false)
     }
 }
