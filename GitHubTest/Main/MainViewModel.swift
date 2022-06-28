@@ -14,6 +14,7 @@ struct MainViewModel {
     static let shared = MainViewModel()
     
     var link: Observable<[Data]> = Observable([])
+    var dataProvider: DataProvider!
 
     static let api = URL(string: "https://api.github.com/repositories")
     
@@ -47,7 +48,6 @@ struct MainViewModel {
         task.resume()
     }
     
-    var dataProvider: DataProvider!
     lazy var fetchedResultsController: NSFetchedResultsController<Data> = {
         let fetchRequest = NSFetchRequest<Data>(entityName: "Data")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending:true)]
@@ -66,5 +66,5 @@ struct MainViewModel {
         
         return controller
     }()
-    
+
 }

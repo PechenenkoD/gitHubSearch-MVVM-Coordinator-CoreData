@@ -88,7 +88,7 @@ extension MainViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
     }
-    
+
     private func filterContentForSearchText(_ searchText: String) {
         guard let filteredDatas = viewModel?.link.value?.filter({ (search: Data) -> Bool in
             return search.url.lowercased().contains(searchText.lowercased())
@@ -109,16 +109,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         return viewModel?.fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
-    
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let fetchResult = viewModel?.fetchedResultsController.object(at: indexPath)
         if cell != nil {
             cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         }
-//        
-//        var datas: GitHubData
+        
+//        var datas: Data
 //
 //        if isFiltering {
 //            datas = filteredData[indexPath.row]
@@ -138,6 +136,16 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let model = viewModel?.fetchedResultsController.object(at: indexPath)
         coordinator?.eventOccurred(with: .tapped(object: model!))
     }
+    
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        if searchText != "" {
+//            filteredData = (viewModel?.dataProvider.fetchSearchedData(text: searchText))!
+//            tableView.reloadData()
+//        } else {
+//            filteredData = (viewModel?.dataProvider?.fetchsData())!
+//            tableView.reloadData()
+//        }
+//    }
 }
 
 extension MainViewController: NSFetchedResultsControllerDelegate {
