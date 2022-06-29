@@ -53,7 +53,7 @@ struct MainViewModel {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending:true)]
         
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                                    managedObjectContext: dataProvider.viewContext,
+                                                    managedObjectContext: dataProvider.context,
                                                     sectionNameKeyPath: nil, cacheName: nil)
         //controller.delegate = self
         

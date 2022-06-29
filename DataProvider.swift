@@ -20,7 +20,7 @@ class DataProvider {
     private let persistentContainer: NSPersistentContainer
     private let repository: MainViewModel
     
-    var viewContext: NSManagedObjectContext {
+    var context: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
     
@@ -49,27 +49,5 @@ class DataProvider {
             completion(nil)
         }
     }
-    
-//    func fetchsData() -> [Data] {
-//        do {
-//            data = try viewContext.fetch(Data.fetchRequest()) as! [Data]
-//        } catch {
-//            print("Error")
-//        }
-//        return data
-//    }
-//    
-//    func fetchSearchedData(text: String) -> [Data] {
-//        let predicate = NSPredicate(format: "url contains %@", text)
-//        let request: NSFetchRequest = Data.fetchRequest()
-//        request.predicate = predicate
-//        
-//        do {
-//            data = try (viewContext.fetch(request))
-//        } catch {
-//            print("Error while fetching data")
-//        }
-//        return data
-//    }
     
 }

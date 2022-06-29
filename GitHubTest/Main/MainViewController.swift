@@ -10,6 +10,7 @@ import CoreData
 
 class MainViewController: UIViewController, ViewCoordinator {
     
+    // MARK: var/let
     let searchBar = UISearchBar()
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -32,9 +33,10 @@ class MainViewController: UIViewController, ViewCoordinator {
 
     private var isFiltering: Bool = false
 
+    // MARK: viedDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "GitHub"
+        title = "Repositories"
         configureUISearchController()
         configureUITableView()
         
@@ -43,6 +45,7 @@ class MainViewController: UIViewController, ViewCoordinator {
         }
         viewModel?.dataProvider.fetchData{ (error) in }
     }
+
     
     // MARK: - viewDidLayoutSubviews
     override func viewDidLayoutSubviews() {
@@ -53,13 +56,14 @@ class MainViewController: UIViewController, ViewCoordinator {
     // MARK: - configureUISearchController
     func configureUISearchController() {
         let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
+        //searchController.searchResultsUpdater = self
         
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
         definesPresentationContext = true
         searchController.searchBar.delegate = self
+        searchController.searchBar.autocapitalizationType = .none
     }
     
     // MARK: - ConfigureUITableView
@@ -68,44 +72,32 @@ class MainViewController: UIViewController, ViewCoordinator {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
-        
     }
 }
 
 // MARK: - Extensions
 extension MainViewController: UISearchBarDelegate {
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if !searchText.isEmpty {
-            isFiltering = true
-            filterContentForSearchText(searchText)
+        if searchText != "" {
+            let predicate = NSPredicate(format: "url contains[c] %@", searchText)
+            viewModel?.fetchedResultsController.fetchRequest.predicate = predicate
         } else {
-            isFiltering = false
+            viewModel?.fetchedResultsController.fetchRequest.predicate = nil
         }
-    }
-}
-
-extension MainViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
-    }
-
-    private func filterContentForSearchText(_ searchText: String) {
-        guard let filteredDatas = viewModel?.link.value?.filter({ (search: Data) -> Bool in
-            return search.url.lowercased().contains(searchText.lowercased())
-        }) else {
-            return
+        
+        do {
+            try viewModel?.fetchedResultsController.performFetch()
+            tableView.reloadData()
+        } catch {
+            print(error)
         }
-        filteredData = filteredDatas
-        tableView.reloadData()
     }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering {
-            return filteredData.count
-        }
         return viewModel?.fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
@@ -115,15 +107,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         if cell != nil {
             cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         }
-        
-//        var datas: Data
-//
-//        if isFiltering {
-//            datas = filteredData[indexPath.row]
-//        } else {
-//            datas = filteredData[indexPath.row]
-//
-//        }
         
         cell.textLabel?.text = fetchResult!.login
         cell.detailTextLabel?.text = fetchResult!.html_url.prefix(30).appending("...")
@@ -136,16 +119,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let model = viewModel?.fetchedResultsController.object(at: indexPath)
         coordinator?.eventOccurred(with: .tapped(object: model!))
     }
-    
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchText != "" {
-//            filteredData = (viewModel?.dataProvider.fetchSearchedData(text: searchText))!
-//            tableView.reloadData()
-//        } else {
-//            filteredData = (viewModel?.dataProvider?.fetchsData())!
-//            tableView.reloadData()
-//        }
-//    }
 }
 
 extension MainViewController: NSFetchedResultsControllerDelegate {
