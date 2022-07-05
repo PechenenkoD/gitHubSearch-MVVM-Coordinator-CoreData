@@ -8,10 +8,17 @@
 import UIKit
 import CoreData
 
-class MainViewController: UIViewController, ViewCoordinator {
+private enum Defaults {
+    static let numberOfSection = 0
+    static let numberOfLineReduction = 30
+    static let title = "Repositories"
+    static let cellName = "cell"
+}
+
+final class RepositoryViewController: UIViewController, ViewCoordinator {
     
-    // MARK: var/let
-    var viewModel: MainViewModel?
+    // MARK: Properties
+    var viewModel: RepositoryViewModel?
     var coordinator: Coordiantor?
     
     let tableView: UITableView = {
@@ -22,18 +29,18 @@ class MainViewController: UIViewController, ViewCoordinator {
     let searchController = UISearchController(searchResultsController: nil)
     let searchBar = UISearchBar()
 
-    // MARK: viedDidLoad
+    // MARK: ViewController LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Repositories"
+        title = Defaults.title
         
         configureUISearchController()
         configureUITableView()
         
-        viewModel?.link.bind { [weak self] _ in
+        viewModel?.retrieve.bind { [weak self] _ in
             self?.tableView.reloadData()
         }
-        viewModel?.fetchData(text: "text") { _, _  in }
+        viewModel?.fetchData(text: searchBar.text!) { _, _  in }
     }
     
     // MARK: - viewDidLayoutSubviews
@@ -42,7 +49,7 @@ class MainViewController: UIViewController, ViewCoordinator {
         tableView.frame = view.bounds
     }
     
-    // MARK: - configureUISearchController
+    // MARK: - Methods
     func configureUISearchController() {
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
@@ -52,33 +59,32 @@ class MainViewController: UIViewController, ViewCoordinator {
         searchController.obscuresBackgroundDuringPresentation = false
     }
     
-    // MARK: - ConfigureUITableView
     func configureUITableView() {
         view.addSubview(tableView)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Defaults.cellName)
         tableView.delegate = self
         tableView.dataSource = self
     }
 }
 
 // MARK: - Extensions
-extension MainViewController: UISearchBarDelegate {
+extension RepositoryViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         viewModel?.filteringCreation(search: searchText)        
     }
 }
 
-extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+extension RepositoryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.numberOfObject(sections: section) ?? 0
+        return viewModel?.numberOfObject(sections: section) ?? Defaults.numberOfSection
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        var cell = tableView.dequeueReusableCell(withIdentifier: Defaults.cellName, for: indexPath)
         let fetchResult = viewModel?.fetchResult(indexPath: indexPath)
-        cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        cell = UITableViewCell(style: .subtitle, reuseIdentifier: Defaults.cellName)
         cell.textLabel?.text = fetchResult!.login
-        cell.detailTextLabel?.text = fetchResult!.html_url.prefix(30).appending("...")
+        cell.detailTextLabel?.text = fetchResult!.html_url.prefix(Defaults.numberOfLineReduction).appending("...")
         
         return cell
     }
@@ -86,12 +92,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let model = viewModel?.fetchResult(indexPath: indexPath)
-        coordinator?.eventOccurred(with: .tapped(object: model!))
+        coordinator?.userButtonPressed(with: .tapped(object: model!))
     }
 }
 
-extension MainViewController: NSFetchedResultsControllerDelegate {
+extension RepositoryViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        tableView.reloadData()
+        viewModel?.updateController()
     }
 }

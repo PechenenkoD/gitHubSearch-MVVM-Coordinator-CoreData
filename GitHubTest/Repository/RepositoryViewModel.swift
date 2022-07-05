@@ -5,21 +5,29 @@
 //  Created by Dmitro Pechenenko on 14.06.2022.
 //
 
-import CoreData
 import UIKit
+import CoreData
 
-struct MainViewModel {
+private enum Defaults {
+    static let numberOfSection = 0
+    static let entityName = "Repository"
+    static let id = "id"
+}
+
+struct RepositoryViewModel {
     
+    // MARK: Properties
     private var fetchedResultsController: NSFetchedResultsController<Repository>
-    private var dataProvider: DataProvider!
-    var link: Observable<[Repository]> = Observable([])
+    private var persistentContainer: CoreDataStack!
+    var retrieve: Observable<[Repository]> = Observable([])
     
+    // MARK: Initialized
     init() {
-        self.dataProvider = DataProvider(persistentContainer: CoreDataStack.shared.persistentContainer)
-        let fetchRequest = NSFetchRequest<Repository>(entityName: "Repository")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending:true)]
+        self.persistentContainer = CoreDataStack(persistentContainer: CoreDataStack.shared.persistentContainer)
+        let fetchRequest = NSFetchRequest<Repository>(entityName: Defaults.entityName)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: Defaults.id, ascending:true)]
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                                    managedObjectContext: dataProvider.context,
+                                                    managedObjectContext: persistentContainer.context,
                                                     sectionNameKeyPath: nil, cacheName: nil)
 
         self.fetchedResultsController = controller
@@ -32,24 +40,14 @@ struct MainViewModel {
         }
     }
 
-    func fetchData(text: String, completion: @escaping(_ filmsDict: [Repository]?, _ error: Error?) -> ()) {
+    //MARK: Methods
+    func fetchData(text: String, completion: @escaping(_ repo: [Repository]?, _ error: Error?) -> ()) {
         let urlString = "https://api.github.com/repositories?q=\(text)"
         guard let url = URL(string: urlString) else { return }
         let task = URLSession.shared.dataTask(with: url) { data, _, _ in
-//            if let error = error {
-//                completion(nil, error)
-//                return
-//            }
-//
-//            guard let data = data else {
-//                let error = NSError(domain: dataErrorDomain, code: DataErrorCode.networkUnavailable.rawValue, userInfo: nil)
-//                completion(nil, error)
-//                return
-//            }
             guard let data = data else { return }
-            
             do {
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Repository")
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Defaults.entityName)
                 let deleteRequest = NSBatchDeleteRequest.init(fetchRequest: fetchRequest)
                 try CoreDataStack.shared.persistentContainer.viewContext.execute(deleteRequest)
                 
@@ -80,7 +78,7 @@ struct MainViewModel {
         fetchRequestPredicate(searchText: search)
         do {
             try self.fetchedResultsController.performFetch()
-            link.value = []
+            retrieve.value = []
         } catch {
             print(error)
         }
@@ -96,11 +94,15 @@ struct MainViewModel {
     }
     
     func numberOfObject(sections: Int) -> Int {
-        self.fetchedResultsController.sections?[sections].numberOfObjects ?? 0
+        self.fetchedResultsController.sections?[sections].numberOfObjects ?? Defaults.numberOfSection
     }
 
     func fetchResult(indexPath: IndexPath) -> Repository {
         self.fetchedResultsController.object(at: indexPath)
+    }
+    
+    func updateController() {
+        retrieve.value = []
     }
     
 }

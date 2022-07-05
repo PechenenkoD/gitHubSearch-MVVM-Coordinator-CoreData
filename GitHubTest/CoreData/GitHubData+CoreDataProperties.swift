@@ -6,9 +6,7 @@
 //
 //
 
-import Foundation
 import CoreData
-
 
 extension Repository {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Repository> {

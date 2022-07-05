@@ -5,7 +5,6 @@
 //  Created by Dmitro Pechenenko on 17.06.2022.
 //
 
-import Foundation
 import UIKit
 
 enum Event {
@@ -17,7 +16,7 @@ enum Event {
 protocol Coordiantor: AnyObject {
     var navigationController: UINavigationController? { get set }
     
-    func eventOccurred(with type: Event)
+    func userButtonPressed(with type: Event)
     func start()
 }
 

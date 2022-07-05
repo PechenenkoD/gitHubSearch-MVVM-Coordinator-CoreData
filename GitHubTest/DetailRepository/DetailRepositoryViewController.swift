@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import CoreData
 
-class DetailViewController: UIViewController, ViewCoordinator {
-    
-    var viewModel: DetailViewModel?
+class DetailRepositoryViewController: UIViewController, ViewCoordinator {
+
+    var viewModel: DetailRepositoryViewModel?
     var coordinator: Coordiantor?
     var labelLogin: UILabel!
     var labelURL: UILabel!
@@ -25,7 +26,7 @@ class DetailViewController: UIViewController, ViewCoordinator {
     var labelStarredUrl: UILabel!
     var labelSubscriptionsUrl: UILabel!
 
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -40,51 +41,51 @@ class DetailViewController: UIViewController, ViewCoordinator {
             self.labelFollowersUrl.text = details?.followers_url
         }
     }
-    
+
     private func setupUI() {
         title = "Detail"
         view.backgroundColor = .white
     }
-    
+
     private func setupLabel() {
         labelLogin = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
-        labelLogin.center = CGPoint(x: 150, y: 285)
+        labelLogin.center = CGPoint(x: 130, y: 120)
         labelLogin.textAlignment = .left
         labelLogin.text = ""
             self.view.addSubview(labelLogin)
 
         labelURL = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
-        labelURL.center = CGPoint(x: 150, y: 350)
+        labelURL.center = CGPoint(x: 130, y: 140)
         labelURL.textAlignment = .left
         labelURL.text = ""
             self.view.addSubview(labelURL)
 
         labelType = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
-        labelType.center = CGPoint(x: 150, y: 415)
+        labelType.center = CGPoint(x: 130, y: 160)
         labelType.textAlignment = .left
         labelType.text = ""
             self.view.addSubview(labelType)
 
         labelNodeID = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
-        labelNodeID.center = CGPoint(x: 150, y: 475)
+        labelNodeID.center = CGPoint(x: 130, y: 180)
         labelNodeID.textAlignment = .left
         labelNodeID.text = ""
             self.view.addSubview(labelNodeID)
-        
+
         labelAvatarUrl = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
-        labelAvatarUrl.center = CGPoint(x: 150, y: 500)
+        labelAvatarUrl.center = CGPoint(x: 130, y: 200)
         labelAvatarUrl.textAlignment = .left
         labelAvatarUrl.text = ""
             self.view.addSubview(labelAvatarUrl)
-        
+
         labelEventsUrl = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
-        labelEventsUrl.center = CGPoint(x: 150, y: 520)
+        labelEventsUrl.center = CGPoint(x: 130, y: 220)
         labelEventsUrl.textAlignment = .left
         labelEventsUrl.text = ""
             self.view.addSubview(labelEventsUrl)
-        
+
         labelFollowersUrl = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
-        labelFollowersUrl.center = CGPoint(x: 150, y: 540)
+        labelFollowersUrl.center = CGPoint(x: 130, y: 240)
         labelFollowersUrl.textAlignment = .left
         labelFollowersUrl.text = ""
             self.view.addSubview(labelFollowersUrl)

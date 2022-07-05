@@ -11,12 +11,12 @@ import UIKit
 class AppCoordinator: Coordiantor {
     var navigationController: UINavigationController?
     
-    func eventOccurred(with type: Event) {
+    func userButtonPressed(with type: Event) {
         switch type {
         case .tapped(let object):
-            let vc = DetailViewController()
+            let vc = DetailRepositoryViewController()
             vc.coordinator = self
-            let viewModel = DetailViewModel()
+            let viewModel = DetailRepositoryViewModel()
             viewModel.link.value = object
             vc.viewModel = viewModel
             navigationController?.pushViewController(vc, animated: true)
@@ -24,10 +24,9 @@ class AppCoordinator: Coordiantor {
     }
     
     func start() {
-        let vc = MainViewController()
+        let vc = RepositoryViewController()
         vc.coordinator = self
-        vc.viewModel = MainViewModel()
-        
+        vc.viewModel = RepositoryViewModel()
         navigationController?.setViewControllers([vc], animated: false)
     }
 }
