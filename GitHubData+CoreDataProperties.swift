@@ -10,13 +10,9 @@ import Foundation
 import CoreData
 
 
-extension Data {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Data> {
-        return NSFetchRequest<Data>(entityName: "Data")
+extension Repository {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Repository> {
+        return NSFetchRequest<Repository>(entityName: "Repository")
     }
-
-    @NSManaged public var name: String?
-
 }
 

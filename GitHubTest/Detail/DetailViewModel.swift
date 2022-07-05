@@ -6,7 +6,8 @@
 //
 
 import Foundation
+import CoreData
 
 struct DetailViewModel {
-    var link: Observable<Data> = Observable(nil)
+    var link: Observable<Repository> = Observable(nil)
 }

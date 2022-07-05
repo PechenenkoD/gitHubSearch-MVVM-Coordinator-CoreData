@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Data" representedClassName="Data" syncable="YES">
+    <entity name="Repository" representedClassName="Repository" syncable="YES">
+        <attribute name="avatar_url" optional="YES" attributeType="String"/>
+        <attribute name="events_url" optional="YES" attributeType="String"/>
+        <attribute name="followers_url" optional="YES" attributeType="String"/>
+        <attribute name="following_url" optional="YES" attributeType="String"/>
+        <attribute name="gists_url" optional="YES" attributeType="String"/>
         <attribute name="html_url" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="login" optional="YES" attributeType="String"/>
         <attribute name="node_id" optional="YES" attributeType="String"/>
+        <attribute name="organizations_url" optional="YES" attributeType="String"/>
+        <attribute name="received_events_url" optional="YES" attributeType="String"/>
+        <attribute name="repos_url" optional="YES" attributeType="String"/>
+        <attribute name="starred_url" optional="YES" attributeType="String"/>
+        <attribute name="subscriptions_url" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
         <attribute name="url" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Data" positionX="-54" positionY="-9" width="128" height="119"/>
+        <element name="Repository" positionX="-54" positionY="-9" width="128" height="269"/>
     </elements>
 </model>
