@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1992E10E2874CB140072C18C /* DetailRepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1992E10D2874CB140072C18C /* DetailRepositoryCell.swift */; };
+		1992E11028756B940072C18C /* DetailRepositoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1992E10F28756B940072C18C /* DetailRepositoryCell.xib */; };
 		19C60F002858773E00CF6496 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60EFF2858773E00CF6496 /* AppDelegate.swift */; };
 		19C60F042858773E00CF6496 /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F032858773E00CF6496 /* RepositoryViewController.swift */; };
 		19C60F0A2858773E00CF6496 /* GitHubTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 19C60F082858773E00CF6496 /* GitHubTest.xcdatamodeld */; };
@@ -44,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1992E10D2874CB140072C18C /* DetailRepositoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRepositoryCell.swift; sourceTree = "<group>"; };
+		1992E10F28756B940072C18C /* DetailRepositoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailRepositoryCell.xib; sourceTree = "<group>"; };
 		19C60EFC2858773E00CF6496 /* GitHubTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19C60EFF2858773E00CF6496 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		19C60F032858773E00CF6496 /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
@@ -187,6 +191,8 @@
 			children = (
 				19C60F5C285BBDCE00CF6496 /* DetailRepositoryViewModel.swift */,
 				19C60F5E285BBDDB00CF6496 /* DetailRepositoryViewController.swift */,
+				1992E10D2874CB140072C18C /* DetailRepositoryCell.swift */,
+				1992E10F28756B940072C18C /* DetailRepositoryCell.xib */,
 			);
 			path = DetailRepository;
 			sourceTree = "<group>";
@@ -304,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19C60F0F2858774000CF6496 /* LaunchScreen.storyboard in Resources */,
+				1992E11028756B940072C18C /* DetailRepositoryCell.xib in Resources */,
 				19C60F0C2858774000CF6496 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,6 +347,7 @@
 				19C60F002858773E00CF6496 /* AppDelegate.swift in Sources */,
 				19C60F0A2858773E00CF6496 /* GitHubTest.xcdatamodeld in Sources */,
 				19C60F56285B588900CF6496 /* Observable.swift in Sources */,
+				1992E10E2874CB140072C18C /* DetailRepositoryCell.swift in Sources */,
 				19C60F5D285BBDCE00CF6496 /* DetailRepositoryViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

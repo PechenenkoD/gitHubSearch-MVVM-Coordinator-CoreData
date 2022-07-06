@@ -9,5 +9,7 @@ import Foundation
 import CoreData
 
 struct DetailRepositoryViewModel {
-    var link: Observable<Repository> = Observable(nil)
+    //var link: Observable<Repository> = Observable(nil)
+    let detail: Repository
 }
+

@@ -16,8 +16,8 @@ class AppCoordinator: Coordiantor {
         case .tapped(let object):
             let vc = DetailRepositoryViewController()
             vc.coordinator = self
-            let viewModel = DetailRepositoryViewModel()
-            viewModel.link.value = object
+            let viewModel = DetailRepositoryViewModel(detail: object)
+            //viewModel.link.value = object
             vc.viewModel = viewModel
             navigationController?.pushViewController(vc, animated: true)
         }
