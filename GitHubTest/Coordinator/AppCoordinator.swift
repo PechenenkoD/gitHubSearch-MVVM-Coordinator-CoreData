@@ -24,7 +24,8 @@ class AppCoordinator: Coordiantor {
     }
     
     func start() {
-        let vc = RepositoryViewController()
+        let viewModel = RepositoryViewModel()
+        let vc = RepositoryViewController(viewModel: viewModel)
         vc.coordinator = self
         vc.viewModel = RepositoryViewModel()
         navigationController?.setViewControllers([vc], animated: false)

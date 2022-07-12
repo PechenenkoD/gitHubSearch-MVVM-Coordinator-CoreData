@@ -7,7 +7,11 @@
 
 import UIKit
 
-final class DetailRepositoryCell: UITableViewCell {
+protocol DetailRepositoryCellProtocol {
+    func configureCell(_ text: String)
+}
+
+final class DetailRepositoryCell: UITableViewCell, DetailRepositoryCellProtocol {
 
     @IBOutlet weak var loginLabel: UILabel!
     

@@ -11,10 +11,20 @@ import CoreData
 private enum Defaults {
     static let numberOfSection = 0
     static let entityName = "Repository"
-    static let id = "id"
+    static let login = "login"
 }
 
-struct RepositoryViewModel {
+protocol RepositoryViewModelProtocol {
+    var retrieve: Observable<[Repository]> { get set }
+    func fetchData(text: String, completion: @escaping(_ repo: [Repository]?, _ error: Error?) -> ())
+    func filteringCreation(search: String)
+    func fetchRequestPredicate(searchText: String)
+    func numberOfObject(sections: Int) -> Int
+    func fetchResult(indexPath: IndexPath) -> Repository
+    func updateController()
+}
+
+struct RepositoryViewModel: RepositoryViewModelProtocol {
     
     // MARK: Properties
     private var fetchedResultsController: NSFetchedResultsController<Repository>
@@ -25,7 +35,7 @@ struct RepositoryViewModel {
     init() {
         self.persistentContainer = CoreDataStack(persistentContainer: CoreDataStack.shared.persistentContainer)
         let fetchRequest = NSFetchRequest<Repository>(entityName: Defaults.entityName)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: Defaults.id, ascending:true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: Defaults.login, ascending:true)]
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                     managedObjectContext: persistentContainer.context,
                                                     sectionNameKeyPath: nil, cacheName: nil)
@@ -55,6 +65,7 @@ struct RepositoryViewModel {
                 print(jsonObject)
                 
                 var filteredJSONObject = [Repository]()
+                
                 jsonObject.forEach { repo in
                     if !filteredJSONObject.contains(where: { filterRepo in
                         filterRepo.id.intValue == repo.id.intValue
@@ -86,7 +97,7 @@ struct RepositoryViewModel {
 
     func fetchRequestPredicate(searchText: String) {
         if searchText != "" {
-            let predicate = NSPredicate(format: "url contains[c] %@", searchText)
+            let predicate = NSPredicate(format: "login contains[c] %@", searchText)
             fetchedResultsController.fetchRequest.predicate = predicate
         } else {
             fetchedResultsController.fetchRequest.predicate = nil
