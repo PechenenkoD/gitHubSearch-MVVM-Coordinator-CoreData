@@ -75,7 +75,6 @@ struct RepositoryViewModel: RepositoryViewModelProtocol {
                         CoreDataStack.shared.persistentContainer.viewContext.delete(repo)
                     }
                 }
-                
                 completion(filteredJSONObject, nil)
                 CoreDataStack.shared.saveContext()
             } catch {
