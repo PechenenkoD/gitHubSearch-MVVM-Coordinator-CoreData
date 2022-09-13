@@ -15,7 +15,6 @@ private enum Defaults {
     static let cellName = "cellDetail"
 }
 
-
 class DetailRepositoryViewController: UIViewController, ViewCoordinator {
     
     var coordinator: Coordiantor?
@@ -90,5 +89,4 @@ extension DetailRepositoryViewController: UITableViewDelegate, UITableViewDataSo
         
         return cell
     }
-    
 }
